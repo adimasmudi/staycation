@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import propTypes from 'prop-types'
+
+
 export default function Button(props) {
     const className = [props.className]
     if(props.isPrimary) className.push("btn-primary")
@@ -29,7 +31,7 @@ export default function Button(props) {
         )
     }
 
-    if(props.types === "link"){
+    if(props.type === "link"){
         if(props.isExternal){
             return(
                 <a 
@@ -55,13 +57,13 @@ export default function Button(props) {
             )
         }
     }
-    return  <Button
+    return  <button
                 className={className.join(" ")} 
                 style={props.style} 
                 onClick={onClick}
             >
                 {props.children}
-            </Button>
+            </button>
 }
 
 Button.propTypes = {
