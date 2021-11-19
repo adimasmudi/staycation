@@ -40,7 +40,7 @@ export default function Hero(props) {
                     </Button>
 
                     <div className="row" style={{marginTop:80}}>
-                        <div className="col-auto" style={{marginRight:30}}>
+                        <div className="col-auto" style={{marginRight:20}}>
                             <img 
                                 height="36"
                                 width="36"
@@ -50,7 +50,7 @@ export default function Hero(props) {
                                 {formatNumber(props.data.travelers)}{" "} <span className="text-gray-500 font-weight-light">Travelers</span>
                             </h6>
                         </div>
-                        <div className="col-auto" style={{marginRight:30}}>
+                        <div className="col-auto" style={{marginRight:20}}>
                             <img 
                                 height="36"
                                 width="36"
@@ -60,7 +60,7 @@ export default function Hero(props) {
                                 {formatNumber(props.data.treasure)}{" "} <span className="text-gray-500 font-weight-light">Treasures</span>
                             </h6>
                         </div>
-                        <div className="col-auto" style={{marginRight:30}}>
+                        <div className="col-auto" style={{marginRight:20}}>
                             <img 
                                 height="36"
                                 width="36"
