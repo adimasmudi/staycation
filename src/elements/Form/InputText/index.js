@@ -18,7 +18,7 @@ export default function Text(props) {
   const [hasError, setHasError] = useState(null);
   let pattern = "";
 
-  if (type === "email") pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+s/;
+  if (type === "email") pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (type === "tel") pattern = "[0-9]*";
 
   const onChange = (event) => {
@@ -31,7 +31,7 @@ export default function Text(props) {
 
     if (type === "email") {
       if (!pattern.test(event.target.value)) setHasError(errorResponse);
-      else hasError(null);
+      else setHasError(null);
     }
 
     if (type === "tel") {
@@ -49,13 +49,13 @@ export default function Text(props) {
           </div>
         )}
         <input
-          type={type}
           name={name}
+          type={type}
           pattern={pattern}
           className={["form-control", inputClassName].join(" ")}
           value={value}
           placeholder={placeholder}
-          onChange-={onChange}
+          onChange={onChange}
         />
         {append && (
           <div className="input-group-append bg-gray-900">
