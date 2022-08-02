@@ -16,6 +16,8 @@ import Completed from "parts/Checkout/Completed";
 
 import ItemDetails from "json/itemDetails.json";
 
+import { submitBooking } from "store/actions/checkout";
+
 class Checkout extends Component {
   state = {
     data: {
@@ -43,15 +45,49 @@ class Checkout extends Component {
     document.title = "Staycation | Checkout";
   }
 
-  render() {
+  _Submit = (nextStep) => {
     const { data } = this.state;
     const { checkout } = this.props;
+
+    const payload = new FormData();
+
+    payload.append("firstName", data.firstName);
+    payload.append("lastName", data.lastName);
+    payload.append("email", data.email);
+    payload.append("phoneNumber", data.phone);
+    payload.append("idItem", checkout._id);
+    payload.append("duration", checkout.duration);
+    payload.append("bookingStartDate", checkout.date.startDate);
+    payload.append("bookingEndDate", checkout.date.endDate);
+    payload.append("accountHolder", data.bankHolder);
+    payload.append("bankFrom", data.bankName);
+    payload.append("image", data.proofPayment[0]);
+    // payload.append("bankId", checkout.bankId);
+
+    this.props
+      .submitBooking(payload)
+      .then(() => {
+        nextStep();
+      })
+      .catch((error) => {
+        console.log("ada error", error);
+      });
+  };
+
+  render() {
+    const { data } = this.state;
+    const { checkout, page } = this.props;
+    console.log(page, data);
 
     if (!checkout)
       return (
         <div className="container">
           <p className="text-center">Pilih kamar dulu</p>
-          <Button className="text-center btn" type="link" href="/">
+          <Button
+            className="text-center btn"
+            type="button"
+            onClick={() => this.props.history.goBack()}
+          >
             Back
           </Button>
         </div>
@@ -65,7 +101,7 @@ class Checkout extends Component {
           <BookingInformation
             data={data}
             checkout={checkout}
-            itemDetails={ItemDetails}
+            itemDetails={page[checkout._id]}
             onChange={this.onChange}
           />
         ),
@@ -77,7 +113,7 @@ class Checkout extends Component {
         content: (
           <Payment
             data={data}
-            ItemDetails={ItemDetails}
+            itemDetails={page[checkout._id]}
             checkout={checkout}
             onChange={this.onChange}
           />
@@ -148,7 +184,7 @@ class Checkout extends Component {
                           isBlock
                           isPrimary
                           hasShadow
-                          onClick={nextStep}
+                          onClick={() => this._Submit(nextStep)}
                         >
                           Continue to book
                         </Button>
@@ -190,6 +226,7 @@ class Checkout extends Component {
 
 const mapStateToProps = (state) => ({
   checkout: state.checkout,
+  page: state.page,
 });
 
-export default connect(mapStateToProps)(Checkout);
+export default connect(mapStateToProps, { submitBooking })(Checkout);

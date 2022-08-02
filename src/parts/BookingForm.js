@@ -69,7 +69,7 @@ class BookingForm extends Component {
       duration: data.duration,
       date: {
         startDate: data.date.startDate,
-        ednDate: data.date.endDate,
+        endDate: data.date.endDate,
       },
     });
 
