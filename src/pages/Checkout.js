@@ -64,20 +64,14 @@ class Checkout extends Component {
     payload.append("image", data.proofPayment[0]);
     // payload.append("bankId", checkout.bankId);
 
-    this.props
-      .submitBooking(payload)
-      .then(() => {
-        nextStep();
-      })
-      .catch((error) => {
-        console.log("ada error", error);
-      });
+    this.props.submitBooking(payload).then(() => {
+      nextStep();
+    });
   };
 
   render() {
     const { data } = this.state;
     const { checkout, page } = this.props;
-    console.log(page, data);
 
     if (!checkout)
       return (
